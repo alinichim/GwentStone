@@ -15,7 +15,6 @@ import gamedev.BattleGround;
 import gamedev.Card;
 import gamedev.Deck;
 
-// TODO: Implement game iteration.
 // TODO: Refactor
 public class InitGame {
 	static private ArrayList<String> minionNames = {"Sentinel", "Berseker", "Goliath", "Warden"};
@@ -27,7 +26,7 @@ public class InitGame {
 
 	// Initialize the game by instantiating the players, decks, and
 	// battleground.
-	static public void initializeGame(Input in, ArrayNode out) {
+	static public void initializeGame(Input in, ArrayNode out, OnjectMapper mapper) {
 		// Create the players.
 		Player p1 = constructPlayer(in.getPlayerOneDecks());
 		Player p2 = constructPlayer(in.getPlayerTwoDecks());
@@ -63,7 +62,7 @@ public class InitGame {
 		return new Player(decks, new PlayerHUD());
 	}
 
-	static private void addAppropiateSpecialMinion(ArrayList<Card> cards, CardInput c) {
+	private static void addAppropiateSpecialMinion(ArrayList<Card> cards, CardInput c) {
 		if (c.getName().equals("The Ripper")) {
 			cards.add(new TheRipper(
 						c.getName(),
@@ -127,3 +126,4 @@ public class InitGame {
 						));
 		}
 	}
+}
