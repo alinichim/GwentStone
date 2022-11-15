@@ -28,5 +28,5 @@ abstract public class SpecialMinion extends Minion {
 			);
 	}
 
-	abstract public void useAbility(Minion bg);
+	abstract public void useAbility(Minion m);
 }

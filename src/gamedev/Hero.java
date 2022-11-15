@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import gamedev.BattlingCard;
 import gamedev.BattleGround;
 
-abstract public class Hero extends BattlingCard {
+public abstract class Hero extends BattlingCard {
 	public Hero(
 			String name,
 			String description,
@@ -24,5 +24,5 @@ abstract public class Hero extends BattlingCard {
 		this.type = 3;
 	}
 
-	abstract public void useAbility(BattleGround bg, int targetRowIdx);
+	public abstract void useAbility(BattleGround bg, int targetRowIdx);
 }

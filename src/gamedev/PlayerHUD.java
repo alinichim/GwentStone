@@ -2,6 +2,7 @@ package gamedev;
 
 import gamedev.Deck;
 import gamedev.Hero;
+import gamedev.CardCollection;
 
 public class PlayerHUD {
 	private int mana;

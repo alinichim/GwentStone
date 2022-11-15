@@ -40,13 +40,20 @@ public class BattleGround {
 		PlayerHUD hud = p.getPlayerHUD();
 		
 		// Fill mana.
+		turns++;
 		if (turns >= 10) hud.setMana(hud.getMana() + 10);
 		else hud.setMana(hud.getMana() + turns);
 
-		// Unfreeze minions.
+		// Unfreeze minions and set the 'attacked' attribute to false.
 		ArrayList<Row> targetRows = getCurrentPlayerRows();
 		for (Row r : targetRows)
-			for (Minion m : r.getMinions()) m.setFrozen(false);
+			for (Minion m : r.getMinions()) {
+				m.setFrozen(false);
+				m.setAttacked(false);
+			}
+
+		// Set the 'attacked' attribute on hero to false.
+		hud.getHero().setAttacked(false);
 
 		// Players draw cards.
 		hud.getHand().getCards().add(hud.getDeck().getCards().remove(0));
