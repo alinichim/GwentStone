@@ -1,9 +1,14 @@
 package main;
 
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import fileio.ActionsInput;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-import gamedev.BattleGround;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import fileio.*;
+
+import gamedev.*;
 
 // Interface for lambda expression.
 interface Displayer {
@@ -12,12 +17,12 @@ interface Displayer {
 
 public class Controller {
 	static private ArrayList<String> frontRowCards =
-		new ArrayList<String>(Arrays.asList({"The Ripper", "Miraj", "Goliath", "Warden"}));
+		new ArrayList<String>(Arrays.asList(new String[] {"The Ripper", "Miraj", "Goliath", "Warden"}));
 	static private ArrayList<String> backRowCards =
-		new ArrayList<String>(Arrays.asList({"Sentinel", "Berseker", "The Cursed One", "Disciple"}));
-	static private ArrayList<String> tanks = new ArrayList<String>(Arrays.asList({"Goliath", "Warden"}));
+		new ArrayList<String>(Arrays.asList(new String[] {"Sentinel", "Berseker", "The Cursed One", "Disciple"}));
+	static private ArrayList<String> tanks = new ArrayList<String>(Arrays.asList(new String[] {"Goliath", "Warden"}));
 	private static ArrayList<String> spells =
-		new ArrayList<String>(Arrays.asList({"Winterfell", "Firestorm", "Heart Hound"}));
+		new ArrayList<String>(Arrays.asList(new String[] {"Winterfell", "Firestorm", "Heart Hound"}));
 
 	public Controller() {}
 
@@ -51,7 +56,7 @@ public class Controller {
 						node.put("cardAttacker", action.getCardAttacker());
 						node.put("cardAttacked", action.getCardAttacked());
 						node.put("error", errorMsg);
-					}
+					};
 					cardUsesAttack(bg, action, node, disp);
 					break;
 				}
@@ -62,7 +67,7 @@ public class Controller {
 						node.put("cardAttacker", action.getCardAttacker());
 						node.put("cardAttacked", action.getCardAttacked());
 						node.put("error", errorMsg);
-					}
+					};
 					cardUsesAbility(bg, action, node, disp);
 					break;
 				}
@@ -72,7 +77,7 @@ public class Controller {
 						node.put("command", "useAttackHero");
 						node.put("cardAttacker", action.getCardAttacker());
 						node.put("error", errorMsg);
-					}
+					};
 					useAttackHero(bg, action, node, disp);
 					break;
 				}
@@ -82,7 +87,7 @@ public class Controller {
 						node.put("command", "useHeroAbility");
 						node.put("affectedRow", action.getAffectedRow());
 						node.put("error", errorMsg);
-					}
+					};
 					useHeroAbility(bg, action, node, disp);
 					break;
 				}
@@ -93,7 +98,7 @@ public class Controller {
 						node.put("handIdx", action.getHandIdx());
 						node.put("affectedRow", action.getAffectedRow());
 						node.put("error", errorMsg);
-					}
+					};
 					useEnvironmentCard(bg, acion, node, disp);
 					break;
 				}

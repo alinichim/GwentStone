@@ -64,7 +64,7 @@ public class BattleGround {
 
 	// Helper function to get the rows of the current player.
 	public ArrayList<Row> getCurrentPlayerRows() {
-		return rows.subList(playerTurn * 2, playerTurn * 2 + 2);
+		return (ArrayList<Row>) rows.subList(playerTurn * 2, playerTurn * 2 + 2);
 	}
 
 

@@ -1,5 +1,9 @@
 package gamedev;
 
+import java.util.ArrayList;
+
+import fileio.CardInput;
+
 import gamedev.Deck;
 import gamedev.Hero;
 import gamedev.CardCollection;
@@ -35,5 +39,12 @@ public class PlayerHUD {
 	public void setDeck(Deck deck) { this.deck = new Deck(deck); }
 	public void setHand(CardCollection hand) { this.hand = new CardCollection(hand); }
 	public void setMana(int mana) { this.mana = mana; }
-	public void setHero(Hero hero) { this.hero = hero; }
+	public void setHero(Hero hero) { this.hero = new Hero(hero); }
+	public void setHero(CardInput c) {
+		String name = c.getName();
+		String description = c.getDescription();
+		ArrayList<String> colors = c.getColors();
+		int mana = c.getMana();
+		this.hero = new Hero(name, description, colors, mana);
+	}
 }

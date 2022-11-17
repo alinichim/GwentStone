@@ -1,18 +1,22 @@
 package main;
 
 import java.util.Random;
+import java.util.Collections;
+import java.util.ArrayList;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import gamedev.BattleGround;
+import fileio.*;
+
+import gamedev.*;
 
 public class GameEngine {
 	private static Random rand;
 
-	public GameEngine();
+	public GameEngine() {};
 
 	// Iterate through games.
 	public static void interateGames(Input in, BattleGround bg, ArrayNode out) {
@@ -20,7 +24,7 @@ public class GameEngine {
 		ArrayList<GameInput> gamesIn = in.getGames();
 
 		// Iterate.
-		for (Gameinput game : gamesIn) {
+		for (GameInput game : gamesIn) {
 			// Run the game.
 			runGame(game, bg, out);
 		}
@@ -46,36 +50,22 @@ public class GameEngine {
 		hud1.setDeck(p1.getDecks().get(d1));
 		hud2.setDeck(p2.getDecks().get(d2));
 		// Shuffle decks.
-		Random.shuffle(hud1.getDeck(), rand);
-		Random.shuffle(hud2.getDeck(), rand);
+		ArrayList<Card> cards1 = hud1.getDeck().getCards();
+		ArrayList<Card> cards2 = hud2.getDeck().getCards();
+		Collections.shuffle(cards1, rand);
+		Collections.shuffle(cards2, rand);
 		// Set players heroes.
 		CardInput c1 = startIn.getPlayerOneHero();
 		CardInput c2 = startIn.getPlayerTwoHero();
-		hud1.setHero(
-				new Hero(
-					c1.getName(),
-					c1.getDescription(),
-					c1.getColors(),
-					c1.getMana(),
-					c1.getHealth()
-					)
-				);
-		hud2.setHero(
-				new Hero(
-					c2.getName(),
-					c2.getDescription(),
-					c2.getColors(),
-					c2.getMana(),
-					c2.getHealth()
-					)
-				);
+		hud1.setHero(c1);
+		hud2.setHero(c2);
 		// Set the player turn.
 		bg.setPlayerTurn(startIn.getStartingPlayer());
 		// Set turns.
 		bg.setTurns(0);
 
 		// Get the actions.
-		ArrayList<ActionsInput> actions = startIn.getActions();
+		ArrayList<ActionsInput> actions = game.getActions();
 
 		// Execute actions.
 		for (ActionsInput action : actions) {
