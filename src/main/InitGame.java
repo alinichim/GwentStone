@@ -1,129 +1,74 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import fileio.Input;
-import fileio.DecksInput;
-import fileio.CardInput;
 
-import gamedev.Player;
-import gamedev.PlayerHUD;
-import gamedev.BattleGround;
-import gamedev.Card;
-import gamedev.Deck;
+import fileio.*;
 
-// TODO: Refactor
+import gamedev.*;
+
 public class InitGame {
-	static private ArrayList<String> minionNames = {"Sentinel", "Berseker", "Goliath", "Warden"};
-	static private ArrayList<String> specialMinionNames = {"The Ripper", "Miraj", "The Cursed One", "Disciple"};
-	static private Arraylist<String> spellNames = {"Firestorm", "Winterfell", "Heart Hound"};
-	static private ArrayList<String> heroNames = {"Lord Royce", "Empress Thorina", "King Mudface", "General Kocioraw"};
+	// Arrays with card names.
+	static private String[] minions =
+	{"Sentinel", "Berseker", "Goliath", "Warden"};
+	static private String[] spells =
+	{"Firestorm", "Winterfell", "Heart Hound"};
+
+	// Useful array lists.
+	private static ArrayList<String> minionNames =
+		new ArrayList<String>(Arrays.asList(minions));
+	private static ArrayList<String> spellNames =
+		new ArrayList<String>(Arrays.asList(spells));
 
 	public InitGame() {}
 
 	// Initialize the game by instantiating the players, decks, and
 	// battleground.
-	static public void initializeGame(Input in, ArrayNode out, OnjectMapper mapper) {
+	static public void initializeGame(Input in, ArrayNode out, ObjectMapper mapper) {
 		// Create the players.
 		Player p1 = constructPlayer(in.getPlayerOneDecks());
 		Player p2 = constructPlayer(in.getPlayerTwoDecks());
 
 		// Create the battleground.
 		BattleGround bg = new BattleGround();
-		bg.setPlayers(new ArrayList<Player>({p1, p2}));
+		Player[] players = {p1, p2};
+		bg.setPlayers(new ArrayList<Player>(Arrays.asList(players)));
 	}
 
 	// Return a fully constructed Player with data from DecksInput.
 	static private Player constructPlayer(DecksInput inDecks) {
 		ArrayList<Deck> decks = new ArrayList<Deck>();
-		for (ArrayList<CardInput> deck : inDecks.getDecks()) {
+		for (ArrayList<CardInput> deckIn : inDecks.getDecks()) {
 			ArrayList<Card> cards = new ArrayList<Card>();
-			for (CardInput c : deck) {
+			for (CardInput i : deckIn) {
+				// Get the card's details.
+				String name = i.getName();
+				String desc = i.getDescription();
+				ArrayList<String> colors = i.getColors();
+				int mana = i.getMana();
+				int health = i.getHealth();
+				int atk = i.getAttackDamage();
+
+				Card c = null;
+
+				// Check the type of the card.
 				if (minionNames.indexOf(c.getName()) != -1) {
-					cards.add(new Minion(
-								c.getName(),
-								c.getDescription(),
-								c.getColors(),
-								c.getMana(),
-								c.getHealth(),
-								c.getAttackDamage()
-								));
-				} else if (specialMinionNames.indexOf(c.getName()) != -1) {
-					addAppropiateSpecialMinion(cards, c);
+					c = new Minion(name, desc, colors, mana, health, atk);
+				} else if (spellNames.indexOf(c.getName()) != -1) {
+					c = new SpellCard(name, desc, colors, mana);
 				} else {
-					addAppropiateSpellCard(cards, c);
+					c = new SpecialMinion(name, desc, colors, mana, health, atk);
 				}
+
+				// Add the card to the list.
+				cards.add(c);
 			}
 			decks.add(new Deck(cards));
 		}
 		return new Player(decks, new PlayerHUD());
-	}
-
-	private static void addAppropiateSpecialMinion(ArrayList<Card> cards, CardInput c) {
-		if (c.getName().equals("The Ripper")) {
-			cards.add(new TheRipper(
-						c.getName(),
-						c.getDescription(),
-						c.getColors(),
-						c.getMana(),
-						c.getHealth(),
-						c.getAttackDamage()
-						));
-		} else if (c.getName().equals("Miraj")) {
-			cards.add(new Miraj(
-						c.getName(),
-						c.getDescription(),
-						c.getColors(),
-						c.getMana(),
-						c.getHealth(),
-						c.getAttackDamage()
-						));
-		} else if (c.getName().equals("The Cursed One")) {
-			cards.add(new TheCursedOne(
-						c.getName(),
-						c.getDescription(),
-						c.getColors(),
-						c.getMana(),
-						c.getHealth(),
-						c.getAttackDamage()
-						));
-		} else if (c.getName().equals("Disciple")) {
-			cards.add(new Disciple(
-						c.getName(),
-						c.getDescription(),
-						c.getColors(),
-						c.getMana(),
-						c.getHealth(),
-						c.getAttackDamage()
-						));
-		}
-	}
-
-	static private void addAppropiateSpellCard(ArrayList<Card> cards, CardInput c) {
-		if (c.getName().equals("Firestorm")) {
-			cards.add(new Firestorm(
-						c.getName(),
-						c.getDescription(),
-						c.getColors(),
-						c.getMana()
-						));
-		} else if (c.getName().equals("Winterfell")) {
-			cards.add(new Winterfell(
-						c.getName(),
-						c.getDescription(),
-						c.getColors(),
-						c.getMana()
-						));
-		} else if (c.getName().equals("Heart Hound")) {
-			cards.add(new HeartHound(
-						c.getName(),
-						c.getDescription(),
-						c.getColors(),
-						c.getMana()
-						));
-		}
 	}
 }
