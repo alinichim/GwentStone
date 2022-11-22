@@ -1,12 +1,12 @@
 package main;
 
 import checker.Checker;
-
+import checker.CheckerConstants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import checker.CheckerConstants;
 import fileio.Input;
+import gamedev.BattleGround;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +28,7 @@ public final class Main {
     /**
      * DO NOT MODIFY MAIN METHOD
      * Call the checker
+     *
      * @param args from command line
      * @throws IOException in case of exceptions to reading / writing
      */
@@ -70,6 +71,8 @@ public final class Main {
         ArrayNode output = objectMapper.createArrayNode();
 
         //TODO add here the entry point to your implementation
+        BattleGround bg = InitGame.initializeGame(inputData);
+        GameEngine.iterateGames(inputData, bg, output);
 
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
         objectWriter.writeValue(new File(filePath2), output);

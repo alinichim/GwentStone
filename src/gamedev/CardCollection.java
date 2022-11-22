@@ -2,26 +2,34 @@ package gamedev;
 
 import java.util.ArrayList;
 
-import gamedev.CardCollection;
-
 public class CardCollection {
-	private ArrayList<Card> cards = new ArrayList<Card>();
+    protected ArrayList<Card> cards = new ArrayList<>();
 
-	public CardCollection(ArrayList<Card> cards) {
-		for (Card c : cards) this.cards.add(c);
-	}
+    public CardCollection(final ArrayList<Card> cards) {
+        this.cards.addAll(cards);
+    }
 
-	public CardCollection() {}
+    public CardCollection() {
+    }
 
-	public CardCollection(CardCollection deck) {
-		this(deck.getCards());
-	}
+    public CardCollection(final CardCollection deck) {
+        this(deck.getCards());
+    }
 
-	// Getters.
-	public ArrayList<Card> getCards() { return cards; }
-	// Setters.
-	public void setCards(ArrayList<Card> cards) {
-		this.cards.clear();
-		for (Card c : cards) this.cards.add(c);
-	}
+    /**
+     * This method returns the CardCollection's cards.
+     * @return The CardCollection's cards.
+     */
+    public ArrayList<Card> getCards() {
+        return cards;
+    }
+
+    /**
+     * This method sets the CardCollection's new cards.
+     * @param cards The CardCollection's new cards.
+     */
+    public void setCards(final ArrayList<Card> cards) {
+        this.cards.clear();
+        this.cards.addAll(cards);
+    }
 }

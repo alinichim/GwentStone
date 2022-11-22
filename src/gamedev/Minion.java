@@ -2,43 +2,53 @@ package gamedev;
 
 import java.util.ArrayList;
 
-import gamedev.BattlingCard;
-
 public class Minion extends BattlingCard {
-	protected int attackDamage;
+    protected int attackDamage;
+    public Minion(
+            final String name,
+            final String description,
+            final ArrayList<String> colors,
+            final int mana,
+            final int health,
+            final int attackDamage
+    ) {
+        super(name, description, colors, mana, health);
+        this.attackDamage = attackDamage;
+        this.type = MINION_TYPE;
+    }
 
-	public Minion(
-			String name,
-			String description,
-			ArrayList<String> colors,
-			int mana,
-			int health,
-			int attackDamage
-			) {
-		super(name, description, colors, mana, health);
-		this.attackDamage = attackDamage;
-		this.type = 0;
-	}
+    public Minion(final Minion m) {
+        this(
+                m.getName(),
+                m.getDescription(),
+                m.getColors(),
+                m.getMana(),
+                m.getHealth(),
+                m.getAttackDamage()
+        );
+    }
 
-	public Minion(Minion m) {
-		this(
-				m.getName(),
-				m.getDescription(),
-				m.getColors(),
-				m.getMana(),
-				m.getHealth(),
-				m.getAttackDamage()
-			);
-	}
+    /**
+     * This method executes the attack command on another BattlingCard.
+     * @param target The target BattlingCard.
+     */
+    public void attackCommand(final BattlingCard target) {
+        target.setHealth(target.getHealth() - this.attackDamage);
+    }
 
-	public void attackCommand(BattlingCard target) {
-		target.setHealth(target.getHealth() - this.attackDamage);
-	}
+    /**
+     * This method returns the Minion's attack damage.
+     * @return The Minion's attack damage.
+     */
+    public int getAttackDamage() {
+        return attackDamage;
+    }
 
-	// Getters.
-	public int getAttackDamage() { return attackDamage; }
-	// Setters.
-	public void setAttackDamage(int attackDamage) {
-		this.attackDamage = attackDamage;
-	}
+    /**
+     * This method sets the Minion's new attack damage.
+     * @param attackDamage The Minion's new attack damage.
+     */
+    public void setAttackDamage(final int attackDamage) {
+        this.attackDamage = attackDamage;
+    }
 }

@@ -2,39 +2,74 @@ package gamedev;
 
 import java.util.ArrayList;
 
-import gamedev.Card;
-import gamedev.Deck;
-import gamedev.PlayerHUD;
+public final class Player {
+    private final ArrayList<CardCollection> decks = new ArrayList<>();
+    private PlayerHUD hud;
+    private int wins = 0;
 
-public class Player {
-	private ArrayList<Deck> decks;
-	private PlayerHUD hud;
-	private int wins = 0;
+    public Player(final ArrayList<CardCollection> decks, final PlayerHUD hud) {
+        for (CardCollection deck : decks) {
+            this.decks.add(new CardCollection(deck));
+        }
+        this.hud = new PlayerHUD(hud);
+    }
 
-	public Player(ArrayList<Deck> decks, PlayerHUD hud) {
-		for (Deck deck : decks) this.decks.add(new Deck(deck));
-		this.hud = new PlayerHUD(hud);
-	}
+    public Player() {
+        this(new ArrayList<CardCollection>(), new PlayerHUD());
+    }
 
-	public Player() {
-		this(new ArrayList<Deck>(), new PlayerHUD());
-	}
+    public Player(final Player p) {
+        this(p.getDecks(), p.getPlayerHUD());
+    }
 
-	public Player(Player p) {
-		this(p.getDecks(), p.getPlayerHUD());
-	}
+    /**
+     * This method returns the Player's decks.
+     * @return The Player's decks.
+     */
+    public ArrayList<CardCollection> getDecks() {
+        return decks;
+    }
 
-	// Getters.
-	public ArrayList<Deck> getDecks() { return decks; }
-	public PlayerHUD getPlayerHUD() { return hud; }
-	public int getWins() { return wins; }
-	// Setters.
-	public void setDecks(ArrayList<Deck> decks) {
-		this.decks.clear();
-		for (Deck deck : decks) this.decks.add(new Deck(deck));
-	}
-	public void setPlayerHUD(PlayerHUD hud) {
-		this.hud = new PlayerHUD(hud);
-	}
-	public void setWins(int wins) { this.wins = wins; }
+    /**
+     * This method sets the Player's decks.
+     * @param decks The Player's new decks.
+     */
+    public void setDecks(final ArrayList<CardCollection> decks) {
+        this.decks.clear();
+        for (CardCollection deck : decks) {
+            this.decks.add(new CardCollection(deck));
+        }
+    }
+
+    /**
+     * This method returns the Player's HUD.
+     * @return The Player's HUD.
+     */
+    public PlayerHUD getPlayerHUD() {
+        return hud;
+    }
+
+    /**
+     * This method sets the Player's HUD.
+     * @param playerHUD The Player's new HUD.
+     */
+    public void setPlayerHUD(final PlayerHUD playerHUD) {
+        this.hud = new PlayerHUD(playerHUD);
+    }
+
+    /**
+     * This method returns the Player's wins.
+     * @return The Player's wins.
+     */
+    public int getWins() {
+        return wins;
+    }
+
+    /**
+     * This method sets the Player's wins.
+     * @param wins The Player's new wins.
+     */
+    public void setWins(final int wins) {
+        this.wins = wins;
+    }
 }
