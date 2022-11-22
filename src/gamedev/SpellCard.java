@@ -65,6 +65,15 @@ public final class SpellCard extends Card {
 
     }
 
+    public SpellCard(final SpellCard c) {
+        this(
+                c.getName(),
+                c.getDescription(),
+                c.getColors(),
+                c.getMana()
+        );
+    }
+
     /**
      * This method executes the Spell on a target row.
      * @param bg The BattleGround.

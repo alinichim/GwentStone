@@ -6,7 +6,15 @@ public class CardCollection {
     protected ArrayList<Card> cards = new ArrayList<>();
 
     public CardCollection(final ArrayList<Card> cards) {
-        this.cards.addAll(cards);
+        for (Card c : cards) {
+            if (c.getType() == Card.MINION_TYPE) {
+                this.cards.add(new Minion((Minion) c));
+            } else if (c.getType() == Card.SPECIAL_MINION_TYPE) {
+                this.cards.add(new SpecialMinion((SpecialMinion) c));
+            } else {
+                this.cards.add(new SpellCard((SpellCard) c));
+            }
+        }
     }
 
     public CardCollection() {
