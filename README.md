@@ -37,7 +37,7 @@ design, as it uses a very common type of I/O communication through JSON.
 
 ---
 
-**Author: Alin Ichim**
+**Author: Alin Ichim**  
 **Group: 323CA**
 
 *Copyright (C) 2022 Alin Ichim*
