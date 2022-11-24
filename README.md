@@ -34,3 +34,15 @@ the ability to attack, the ability of being placed on the table or even their na
 
 GwentStone is a very simple game, with the potential of being extended to a more complex
 design, as it uses a very common type of I/O communication through JSON.
+
+---
+
+**Author: Alin Ichim**
+**Group: 323CA**
+
+*Copyright (C) 2022 Alin Ichim*
+
+*All Rights Reserved*
+
+*The package* **gamedev** *and the package* **main** *except Main.java and
+Test.java are protected by copyright.*
